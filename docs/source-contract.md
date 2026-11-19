@@ -1,0 +1,5 @@
+# 邮箱与运输交接协议
+运行来源默认HTTP 8765、IMAP 1143，可通过--mail-port改变；GET `/mail-info`只告知端口与文件夹，不提供业务邮件。IMAP测试账号collector，密码local-demo，仅为本地无TLS演练账号。支持CAPABILITY、LOGIN、LIST、SELECT/EXAMINE、UID SEARCH ALL或UID n:*、UID FETCH uid (BODY.PEEK[])、NOOP、CLOSE和LOGOUT；不支持改写邮件。产品使用真实IMAP只读领取，不能从fixtures、服务器内存或/__inspect获取邮件。
+身份范围为邮箱账号/文件夹/UIDVALIDITY/UID，序号不是稳定ID。移动邮件有新传输位置但MIME相同；Message-ID可能重复，不能单独作为原件唯一性或业务身份。示例含一个重复Message-ID但运输批次不同的转发。每封MIME有application/json附件documents.json，标题和文件名都不保证内容归属，附件包含type/carrier/shipment/version/boxes，type为manifest、release、hold、arrival。manifest定义箱范围；同一承运/批次/箱的release与hold按version决定当前放行状态，缺明确release不得交，arrival独立决定是否实际到货；同版相反结论需待核。原件中的联系方式只在受限资料保存，普通查询脱敏。
+POST `/handoff` JSON reference、carrier、shipment、boxes（箱号数组）、evidence（原件摘要列表），返回箱级accepted。GET同路径按reference查历史。POST `/stop` JSON reference、handoff_reference、boxes、reason，GET查pending/confirmed。重复reference不重建交接；lose_response=true先保存再503。远端只收件，不代替采集程序判断单证或到货。
+检查人员X-Operator: local-operator POST `/__control` stage0/1/2。阶段0两箱放行但仅BX1到货；1邮箱UIDVALIDITY重建且部分原件移动Archive，补到BX1扣留和另一旧批次转发；2现场确认停交。检查必须通过标准imaplib或其他真实IMAP客户端观察世代与字节，不以直接调用解析函数代替。阶段控制不修改此前交接记录，不能由业务产品调用。

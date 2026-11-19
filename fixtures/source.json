@@ -1,0 +1,125 @@
+{
+  "stages": [
+    {
+      "uidvalidity": 100,
+      "folders": {
+        "INBOX": {
+          "101": "manifest",
+          "102": "release",
+          "103": "arrival"
+        },
+        "Archive": {}
+      },
+      "stop_confirm": false
+    },
+    {
+      "uidvalidity": 200,
+      "folders": {
+        "INBOX": {
+          "501": "arrival",
+          "502": "hold",
+          "503": "forward"
+        },
+        "Archive": {
+          "601": "manifest",
+          "602": "release"
+        }
+      },
+      "stop_confirm": false
+    },
+    {
+      "uidvalidity": 200,
+      "folders": {
+        "INBOX": {
+          "501": "arrival",
+          "502": "hold",
+          "503": "forward"
+        },
+        "Archive": {
+          "601": "manifest",
+          "602": "release"
+        }
+      },
+      "stop_confirm": true
+    }
+  ],
+  "messages": [
+    {
+      "key": "manifest",
+      "message_id": "<shared@carrier.test>",
+      "sender": "carrier@example.test",
+      "subject": "箱单 F-701",
+      "document": {
+        "type": "manifest",
+        "carrier": "C1",
+        "shipment": "F-701",
+        "version": 1,
+        "boxes": [
+          "BX1",
+          "BX2"
+        ]
+      }
+    },
+    {
+      "key": "release",
+      "message_id": "<release@carrier.test>",
+      "sender": "carrier@example.test",
+      "subject": "放行 F-701",
+      "document": {
+        "type": "release",
+        "carrier": "C1",
+        "shipment": "F-701",
+        "version": 1,
+        "boxes": [
+          "BX1",
+          "BX2"
+        ]
+      }
+    },
+    {
+      "key": "arrival",
+      "message_id": "<arrival@carrier.test>",
+      "sender": "driver@example.test",
+      "subject": "到货回报",
+      "document": {
+        "type": "arrival",
+        "carrier": "C1",
+        "shipment": "F-701",
+        "version": 1,
+        "boxes": [
+          "BX1"
+        ]
+      }
+    },
+    {
+      "key": "hold",
+      "message_id": "<hold@carrier.test>",
+      "sender": "carrier@example.test",
+      "subject": "更正：部分扣留",
+      "document": {
+        "type": "hold",
+        "carrier": "C1",
+        "shipment": "F-701",
+        "version": 2,
+        "boxes": [
+          "BX1"
+        ]
+      }
+    },
+    {
+      "key": "forward",
+      "message_id": "<shared@carrier.test>",
+      "sender": "agent@example.test",
+      "subject": "转发旧箱单",
+      "document": {
+        "type": "manifest",
+        "carrier": "C1",
+        "shipment": "F-OLD",
+        "version": 1,
+        "boxes": [
+          "OLD1"
+        ]
+      }
+    }
+  ]
+}

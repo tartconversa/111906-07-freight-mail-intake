@@ -56,6 +56,7 @@ def serve(app,port=8765):
         def do_GET(self): self.dispatch()
         def do_POST(self): self.dispatch()
         def dispatch(self):
+            self.new_cookie=None
             parsed=urlparse(self.path);self.path_only=parsed.path;self.query={k:v[-1] for k,v in parse_qs(parsed.query).items()};self.body={};self.files={}
             raw=self.rfile.read(int(self.headers.get('Content-Length','0')))
             kind=self.headers.get('Content-Type','')

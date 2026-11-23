@@ -1,4 +1,5 @@
 .env
+var/
 *.key
 *.pem
 node_modules/
